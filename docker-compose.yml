@@ -1,0 +1,33 @@
+services:
+  app:
+    build: .
+    container_name: docshare-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:////app/data/app.db
+      - DATA_DIR=/app/data
+      # 应用对外可访问地址：OnlyOffice 容器需要能访问到它。
+      # Docker Desktop (Windows/Mac) 用 http://host.docker.internal:8000
+      # Linux 服务器请换成局域网 IP 或域名，例如 http://192.168.1.100:8000
+      - PUBLIC_BASE_URL=http://host.docker.internal:8000
+      - ONLYOFFICE_URL=http://onlyoffice:80
+      - ONLYOFFICE_JWT_ENABLED=true
+      - ONLYOFFICE_JWT_SECRET=change-me-to-a-long-random-secret
+      - JWT_SECRET=change-me-to-another-long-random-secret
+    depends_on:
+      - onlyoffice
+    restart: unless-stopped
+
+  onlyoffice:
+    # 官方镜像 onlyoffice/documentserver；Docker Hub 不可达时使用 DaoCloud 镜像源
+    image: docker.m.daocloud.io/onlyoffice/documentserver
+    container_name: docshare-onlyoffice
+    environment:
+      - JWT_ENABLED=true
+      - JWT_SECRET=change-me-to-a-long-random-secret
+    ports:
+      - "8080:80"
+    restart: unless-stopped
