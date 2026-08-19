@@ -22,7 +22,7 @@
 | 存储 | 本地磁盘（`./data/files/{user_id}/`） |
 | 鉴权 | PyJWT（HS256） |
 | 在线 Office | OnlyOffice Document Server |
-| 前端 | Vue 3 SPA（单文件，零构建；腾讯文档风格三栏布局） |
+| 前端 | Vue 3 SPA（单文件，零构建） |
 | 部署 | Docker Compose + Nginx |
 
 ## 架构概览
@@ -219,7 +219,6 @@ pytest tests -v
 ## 文档
 
 - [CODE_WIKI.md](CODE_WIKI.md) — 结构化代码文档（架构 / 模块职责 / 关键函数 / 依赖 / 运行方式）
-- [开发计划.md](开发计划.md) — 完整开发计划（里程碑 / 数据库设计 / API 设计）
 
 ## 后续扩展
 
